@@ -1,0 +1,1 @@
+flag = b"flag{fl4g_4_testing}"
