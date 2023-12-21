@@ -39,7 +39,7 @@ secret = random.randint(0,p-1)
 F = GF(p)
 a,b = genPara(p)
 E = EllipticCurve(F, [a,b])
-P = E.gens()[0] 
+P = E.gen(0)
 Q = P * secret
 
 print(f'{a = }')
