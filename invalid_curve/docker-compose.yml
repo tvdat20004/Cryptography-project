@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  chall:
+    build:
+      context: .
+    ports:
+      - 6001:6001
+    environment:
+      - FLAG=AIS3{fak3_flag_for_testing_12321312312}
+    restart: always
