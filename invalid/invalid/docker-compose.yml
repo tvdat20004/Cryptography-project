@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  chall:
+    build:
+      context: .
+    volumes:
+      - ../sol/output:/output
+    ports:
+      - 2030:2030
+    restart: always
