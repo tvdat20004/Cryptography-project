@@ -53,7 +53,7 @@ def get_encrypted_flag():
     return C1, C2 
 
 
-# E(Fp), p = f1.f2...fn (factor) and p is prime
+# E(Fp), p = f1.f2...fn (factor)
 # CRT sol: x(p/fn)P = (p/fn)Q
 def sol_dlp():
     sec = []
