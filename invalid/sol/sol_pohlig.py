@@ -82,3 +82,5 @@ flag = ARC4.new(key).decrypt(C2)
 with open('recover4.pdf', 'wb') as filee:
     filee.write(flag)
 r.close()
+# https://crypto.stackexchange.com/questions/81851/pohlig-hellman-and-small-subgroup-attacks
+# https://risencrypto.github.io/PohligHellman/
