@@ -6,8 +6,6 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from hashlib import sha3_512 # most secure hash I've heard :v
 
-
-flag = b'flag{fake_fl4g_for_tssting_123123123}'
 def encrypt(key, mess):
     key = sha3_512(str(key).encode()).digest()[:16]
     iv = secrets.token_bytes(16)
@@ -26,7 +24,7 @@ p = getPrime(30)
 secret = random.randint(0,p-1)
 
 F = GF(p)
-a,b = genPara(p)
+a,b = genPara(p)    
 E = EllipticCurve(F, [a,b])
 P = E.gens()[0] 
 Q = P * secret
@@ -36,6 +34,9 @@ print(f'{b = }')
 print(f'{p = }')
 print('P =', P.xy())
 print('Q =', Q.xy())
-
-ciphertext = encrypt(secret, flag).hex()
-print(f'{ciphertext = }')
+with open("input.pdf", "rb") as inp:
+    input = inp.read()
+ciphertext = encrypt(secret, input)
+with open("cipher.enc", "wb") as write:
+    write.write(ciphertext)
+print("Write ciphertext in cipher.enc successfully!!!")
