@@ -2,7 +2,7 @@ from sage.all import *
 from tqdm import trange
 from hashlib import sha3_512 
 from Crypto.Cipher import AES
-
+from Crypto.Util.Padding import unpad
 def binary_search(array, value):
     n = len(array)
     left = 0
@@ -50,12 +50,12 @@ def decrypt(key, ct):
     mess = cipher.encrypt(ct)
     return mess
 
-a = 644449900
-b = 789004865
-p = 797983243
-P = (4615511, 688861523)
-Q = (139575432, 606939309)
-ciphertext = bytes.fromhex('16807334def2e7297e01ec0a8ce4f84113891ce892f534d5d63c07c55bcccd46e27ba9f0bc5f6d88de445035b244f36995bcb6c9933ef66b51ca695bea213b5d')
+a = 676104023
+b = 752683016
+p = 855369017
+P = (180536981, 236442799)
+Q = (644641297, 320792528)
+ciphertext = open("cipher.enc", "rb").read()
 
 E = EllipticCurve(GF(p),[a,b])
 P = E(*P)
@@ -67,4 +67,5 @@ key = sha3_512(str(d).encode()).digest()[:16]
 iv = ciphertext[:16]
 ciphertext = ciphertext[16:]
 cipher = AES.new(key, AES.MODE_CBC, iv)
-print(cipher.decrypt(ciphertext))
+with open("recovered.pdf", "wb") as file:
+    file.write(unpad(cipher.decrypt(ciphertext),16))
