@@ -16,7 +16,7 @@ with open('cipher.txt', 'r') as f:
     iv = bytes.fromhex(dataCipher[0:32])
     encrypted_flag = bytes.fromhex(dataCipher[32:])
 
-Q = E(41324044221887482254380150457319906053, 65969667437294267823394803695224442309)
+Q = E(62346538674783463848877272148696432571, 250434738461211621900702825288932669267)
 def binary_search(array, value):
     n = len(array)
     left = 0
@@ -36,13 +36,13 @@ def BSGS_ECDLP(P, Q, E):
     m = ceil(sqrt(P.order()))
     baby_list = []
     sorted_list = []
-    for j in trange(m):
+    for j in range(m):
         PP = j*P
         baby_list.append(PP)
         sorted_list.append(PP)
     sorted_list.sort()
 
-    for i in trange(m):
+    for i in range(m):
         result = Q - (i*m)*P
         pos = binary_search(sorted_list, result)
         
@@ -54,19 +54,24 @@ def BSGS_ECDLP(P, Q, E):
             print("The solution for ECDLP is ", x)
             return x
     return False
+
+# Q = P[x]
 n = P.order()
 fac = factor(n)
-print(fac)
+print(f"factors: {fac}")
 d = []
 subgroup = []
 for prime, exponent in fac:
     P0 = (n // (prime ** exponent)) * P 
     Q0 = (n // (prime ** exponent)) * Q
-    d.append(BSGS_ECDLP(P0, Q0, E))
+    x = BSGS_ECDLP(P0, Q0, E)
+    d.append(x)
+    print(f"x = {x}  mod({prime**exponent})")
     subgroup.append(prime**exponent)
 
 secret = crt(d, subgroup)
-print(secret)
+print("Calculating in CRT...")
+print(f"=> x = {secret} mod ({n})")
 assert secret * P == Q
 sha1 = hashlib.sha1()
 sha1.update(str(secret).encode('ascii'))
