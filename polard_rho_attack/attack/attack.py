@@ -1,3 +1,4 @@
+#!/usr/bin/python3 
 from sage.all import * 
 from Crypto.Util.number import * 
 from fractions import Fraction
@@ -5,7 +6,7 @@ from pwn import *
 from Crypto.Util.Padding import unpad
 # connect to server to get parameter
 def getPara():
-    p = getPrime(40)
+    p = getPrime(36)
     r.sendlineafter(b'Enter your prime: ', str(p).encode())
     a = int(r.recvlineS().split('=')[1].strip())
     b = int(r.recvlineS().split('=')[1].strip())
