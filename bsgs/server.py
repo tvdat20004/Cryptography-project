@@ -1,3 +1,4 @@
+#!/usr/bin/python3 
 from sage.all import *
 from Crypto.Util.number import *
 import random
@@ -21,12 +22,12 @@ def genPara(p):
 
 
 p = getPrime(30)
-secret = random.randint(0,p-1)
 
 F = GF(p)
 a,b = genPara(p)    
 E = EllipticCurve(F, [a,b])
 P = E.gens()[0] 
+secret = random.randint(0,P.order()-1)
 Q = P * secret
 
 print(f'{a = }')
