@@ -1,3 +1,4 @@
+#!/usr/bin/python3 
 from sage.all import *
 from tqdm import trange
 from hashlib import sha3_512 
@@ -50,11 +51,11 @@ def decrypt(key, ct):
     mess = cipher.encrypt(ct)
     return mess
 
-a = 676104023
-b = 752683016
-p = 855369017
-P = (180536981, 236442799)
-Q = (644641297, 320792528)
+a = 83204266
+b = 742414288
+p = 815188303
+P = (760488765, 17976372)
+Q = (413918203, 521801124)
 ciphertext = open("cipher.enc", "rb").read()
 
 E = EllipticCurve(GF(p),[a,b])
