@@ -6,11 +6,13 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from hashlib import sha3_512 # most secure hash I've heard :v
 
+# import os
+
 def check(prime):
     if not isPrime(prime):
         print("Not a prime!!!")
         return False
-    if prime <= (1>>40):
+    if prime <= (1<<35):
         print("Your prime is so weak!!!")
         return False
     return True
@@ -28,6 +30,7 @@ def genPara(p):
         E = EllipticCurve(GF(p), [a,b])
         if (4*a**3 + 27 * b**2) % p != 0 and isPrime(int(E.order())): # make sure it's not a singular curve
             return a,b
+
 
 while True:
     p = int(input("Enter your prime: "))
@@ -49,8 +52,9 @@ print('Q =', Q.xy())
 with open("input.pdf", 'rb') as file:
     pt = file.read()
 
+# os.system("mkdir /output")
+
 ciphertext = encrypt(secret, pt)
-with open("cipher.enc", "wb") as file:
+with open("/output/cipher.enc", "wb") as file:
     file.write(ciphertext)
     print("Write ciphertext to cipher.enc successfully!!!")
-
