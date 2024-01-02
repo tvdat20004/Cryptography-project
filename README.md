@@ -7,7 +7,7 @@ Students:
 Lecturer: Nguyễn Ngọc Tự
 
 ## Overview
-- 	Scenario:
+- Scenario:
 A tech company has integrated ECC-based algorithms for secure communications in their IoT devices. They want to validate the strength and security of their ECC implementation to prevent potential breaches.
 - Gaps: 
 ECC, while offering good security with shorter key lengths compared to traditional methods, can be vulnerable if not implemented correctly or if weak curves are chosen.
@@ -16,14 +16,13 @@ ECC, while offering good security with shorter key lengths compared to tradition
 ## Proposed solution
 ### Solution architecture
 
-![image](https://github.com/tvdat20004/Cryptography-project/assets/117071011/e85fb08a-0539-48a0-88ce-ba2cf1db4c11)
+![image](https://github.com/tvdat20004/Cryptography-project/assets/117071011/969af378-89f4-47fe-8ad9-cbf4561d2498)
 
-- Key Generation and Collection:
-	- Elliptic curve:
-	    - An elliptic curve is defined by the equation:  $y^2+xy=x^3+ax+b$
-	    - Equation: $y^2+xy=x^3+ax+b$
-	    - Weierstrass form: $y^2= x^3+ax+b$ $(4a^3+27b^2  ≠0)$
-	    - "Montgomery form": $By^2  = x^3  +Ax^2  +x$
+- Elliptic curve:
+	- An elliptic curve is defined by the equation:  $y^2+xy=x^3+ax+b$
+	- Equation: $y^2+xy=x^3+ax+b$
+	- Weierstrass form: $y^2= x^3+ax+b$ $(4a^3+27b^2  ≠0)$
+	- "Montgomery form": $By^2  = x^3  +Ax^2  +x$
       
 ![image](https://github.com/tvdat20004/Cryptography-project/assets/117071011/76ef9eed-2a49-4b35-92f0-1fc9b613fd14)
 
@@ -35,38 +34,50 @@ ECC, while offering good security with shorter key lengths compared to tradition
 
 - Point scalar multiplication: $nP=P+P+⋯+P$ (n times)
 - Elliptic Curve Discrete Logarithm Problem (ECDLP): It is the problem of finding an integer n such that $Q=nP$. By analogy with the discrete logarithm problem for $F_p^*$, we denote this integer n by $n = log_{P}Q$.
-- __Key generation of ECC__
-Key generation in elliptic curve cryptography (ECC) is a fundamental process that involves generating pairs of cryptographic keys—a private key and a corresponding public key. Here is step-by-step of key generation in ECC: 
-    - **Selecting Parameters**: The first step in key generation is to select the parameters for the elliptic curve. These parameters include the equation defining the curve, the base point on the curve, and the order of the base point. The choice of parameters is critical for the security and efficiency of the ECC system.
-    - **Generating the Private Key**: The private key in ECC is a randomly selected integer within a specific range. The size of the private key depends on the desired level of security. The private key should be kept secret and not shared with anyone.
-    - **Computing the Public Key**: The public key is derived from the private key and the chosen elliptic curve parameters. It is computed by performing scalar multiplication of the base point on the curve with the private key. This process involves adding the base point to itself multiple times according to the binary representation of the private key.
-    - **Storing and Sharing Keys**: The private key must be securely stored and protected from unauthorized access. On the other hand, the public key can be freely shared with others. It is common to represent the public key as a point on the elliptic curve or as a compressed or uncompressed binary representation.
-    - **Key Validation**: After generating the key pair, it is essential to validate the keys to ensure they meet certain criteria. This may involve checking whether the private key is within the valid range, whether the computed public key lies on the elliptic curve, and whether it has the expected properties.
-    - **Key Management**: Proper key management practices should be followed to safeguard the generated key pair. This includes securely storing the private key, using secure key storage mechanisms or hardware security modules. Additionally, key rotation and key revocation mechanisms should be implemented as part of a comprehensive key management strategy.
-### Cryptanalysis Tools:
-- [Sagemath](https://www.sagemath.org/): SageMath (previously Sage or SAGE, "System for Algebra and Geometry Experimentation") is a computer algebra system (CAS) with features covering many aspects of mathematics, including algebra, combinatorics, graph theory, numerical analysis, number theory, calculus and statistics.
-- Python 3.x 
-- [Pycryptodome](https://pycryptodome.readthedocs.io/en/latest/index.html#): PyCryptodome is a self-contained Python package of low-level cryptographic primitives.
+<img width="531" alt="image" src="https://github.com/tvdat20004/Cryptography-project/assets/117071011/bb46894f-7598-4c43-a7fd-5655fe7633a3">
+
+__The fastest known algorithm to solve ECDLP in E(Fp) takes approximately $\sqrt{p}$ steps__
+
+- __Key generation of ECC__: Key generation in elliptic curve cryptography (ECC) is a fundamental process that involves generating pairs of cryptographic keys—a private key and a corresponding public key. Here is step-by-step of key generation in ECC: 
+	- **Selecting Parameters**: The first step in key generation is to select the parameters for the elliptic curve. These parameters include the equation defining the curve, the base point on the curve, and the order of the base point. The choice of parameters is critical for the security and efficiency of the ECC system.
+	- **Generating the Private Key**: The private key in ECC is a randomly selected integer within a specific range. The size of the private key depends on the desired level of security. The private key should be kept secret and not shared with anyone.
+	- **Computing the Public Key**: The public key is derived from the private key and the chosen elliptic curve parameters. It is computed by performing scalar multiplication of the base point on the curve with the private key. This process involves adding the base point to itself multiple times according to the binary representation of the private key.
+
 ### Attack models
+
+#### Baby-step giant-step
+- The baby-step giant-step (BSGS) algorithm is a generic algorithm. It works for every finite cyclic group.
+- Baby-step giant-step is the algorithm used to calculate DLP and presents several standard variants of it. The giant step small step algorithm uses space-time trade-offs to solve the discrete logarithm problem in arbitrary groups.
+- The space complexity of the algorithm is $O(\sqrt{n})$, "while the time complexity of the algorithm is" $O(\sqrt{n})$". This running time is better than the "O(n) running time of the naive brute force calculation.
+- While the BSGS method pre-computes an ordered list of powers and compares the value of another ordered sequence of powers against the former list to find a match.
+
 #### Polard-rho attack
-The strategy of the algorithm is to produce a sequence of randomly generated terms (Ri,ai,bi), where Ri is a point on the the curve E and ai,bi lie in Fp,over which the elliptic curve E is defined. Since E(Fp) is a finite group, the sequence eventually becomes periodic and loops back to an earlier term in the sequence.
+- Pollard’s rho is another algorithm for computing discrete logarithms. It has the same asymptotic time complexity $O(\sqrt{n})$ of the BSGS algorithm, but its space complexity is just 𝑂(1). 
+
+- The strategy of the algorithm is to produce a sequence of randomly generated terms (Ri,ai,bi), where Ri is a point on the the curve E and ai,bi lie in Fp,over which the elliptic curve E is defined. Since E(Fp) is a finite group, the sequence eventually becomes periodic and loops back to an earlier term in the sequence.
 
 ![image](https://hackmd.io/_uploads/rJkR5YVDa.png)
-#### Baby-step giant-step
-- The baby-step giant-step is a meet-in-the-middle algorithm for computing the discrete logarithm or order of an element in a finite abelian group by Daniel Shanks. The discrete log problem is of fundamental importance to the area of public key cryptography.Baby-step Giant-step method for discrete logarithm problem can be extended for ECDLP simply
-
 #### Pohlig-Hellman attack:
-- The Pohlig-Hellman algorithm was presented by Stephan C. Pohlig and Martin E. Hellman in 1978. In the original paper it is presented as an improved algorithm used to compute discrete logarithms over the cyclic field $G = GF(p)$, and how their findings impact elliptic curve cryptography. Given the ECDLP $Q=l*P$, the Pohlig-Hellman algorithm is a recursive algorithm that reduces the problem by computing discrete logarithms in the prime order subgroups of `<P>`. Each of these smaller subproblems can then be solved using methods, such the Pollard’s rho alogrithm.
+- The Pohlig-Hellman algorithm is a general algorithm for solving DLP whose order can be factored into prime powers of smaller primes.
+- Context: The elliptic curve has poorly chosen parameters, and the generator's order is smooth (“smooth” means it only has small prime factors)
+- Attack scenario: The algorithm reduces the computation of the discrete log in the elliptic group to the computation of the discrete log in subgroups whose order is a small prime, then use CRT to combine these to a logarithm in the full group.
+- We can use BSGS or Polard’s Rho algorithm to solve ECDLP on small subgroups.
+<img width="594" alt="image" src="https://github.com/tvdat20004/Cryptography-project/assets/117071011/e770e220-a970-4df7-8162-3e68247deb5b">
+
 #### Smart attack
 - Context: When the order of elliptic curve equal to p (`E.order() == p`)
-- Smart in “Smart attack” describes a linear time method of computing the ECDLP in curves over a field 𝐹𝑝 such that #𝐸(𝐹𝑝) = 𝑝, or in other words such that the trace of Frobenius is one, 𝑡 = 𝑝 + 1 + #𝐸(𝐹𝑝 ) = 1. 
+- Smart attack describes a linear time method of computing the ECDLP in curves over a field 𝐹𝑝 such that #𝐸(𝐹𝑝) = 𝑝, or in other words such that the trace of Frobenius is one, $𝑡 = 𝑝 + 1 + \#𝐸(𝐹𝑝) = 1$ (Elliptic curves that satisfy that condition are also called "anomalous" curves)
+
 #### Invalid curve attack
--	An attacker can choose a public key (x_a, y_a) such that it lies on a curve other than the equation y2 = x3 + ax + c (where c differs from the coefficient b of the curve Valid ECC). Since the addition formula in ECC does not use the constant b, this point can still be processed by the device.
--	When the device performs math on this point, it can reveal information about the secret key. This allows the attacker to find the secret key and thus decrypt the data.
+- Invalid Curve Attack relies on the fact that given the Weierstrass equation y2 = x3+ax+b of an elliptic curve over a prime field E(Fp) with base point G, the doubling and addition formulas do not depend on the coefficient b.
+![image](https://github.com/tvdat20004/Cryptography-project/assets/117071011/ce8154c0-2844-4935-af51-a508ea281ded)
+- If a point is not checked to be on the curve, the attacker can send a point which lie on the curve E’(Fp) of equation $𝑦^2=𝑥^3+𝑎𝑥+𝑏_1$, and now the server will calculate point additions, multiplications on that curve, not the original curve.
+- Attack scenario: Attacker choose an “invalid” point whose order is weak, so attacker can use BSGS, Polard’s Rho or Pohlig - Hellman to solve ECDLP. Repeatedly send invalid point to get more information about private key, then use CRT to combine them.
+
 ### Implementation and testing:
--	Python 3.x 
--	Sagemath
--	Pycryptodome 
+- Python 3.x 
+- Sagemath
+- Pycryptodome 
 
 #### Deployment
 +   Avoid weak curve attacks: Choose a safe curve according to NIST standards (https://safecurves.cr.yp.to/)
