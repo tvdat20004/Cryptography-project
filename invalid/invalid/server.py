@@ -20,7 +20,8 @@ Gx = 484395612939064517590525852527979142027629495260417479958440807170824046352
 Gy = 36134250956749795798585127919587881956611106672985015071877198253568414405109
 G = Point(E, Gx, Gy)
 
-d = randbelow(n)
+# server's secret
+d = 11079208921356230762697446949407573529996920224135760342421115906106851204435
 P = G * d
 
 
@@ -52,7 +53,7 @@ quotes = [
 print("Konpeko!")
 print("watashi no public key: %s" % P)
 
-while True:
+for _ in range(3):
     try:
         print("nani wo shitai desuka?")
         print("1. Start a Diffie-Hellman key exchange")
